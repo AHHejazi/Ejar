@@ -1,0 +1,55 @@
+
+<div class='card'>
+  <div class='card-header'>
+    {{pageTitle}}
+  </div>
+
+  <div class='card-body'>
+
+    <div class='col-md-8'>
+        <form #frm="ngForm" (ngSubmit)="frm.form.valid && postRegion()" >
+        <div class="form-group">
+          <label for="nameAr" >Name Arabic</label>
+          <input required minlength="4" class="form-control" [ngModel]="region?.nameAr" (ngModelChange)="region.nameAr = $event" name="nameAr" placeholder="Name Arabic"  #nameAr="ngModel">
+
+          <div *ngIf="nameAr.invalid && (nameAr.dirty || nameAr.touched)" class="alert alert-danger">
+
+            <div *ngIf="nameAr.errors['required']">
+              Name Arabic is required.
+            </div>
+            <div *ngIf="nameAr.errors['minlength']">
+              Name Arabic must be at least 4 characters long.
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="nameEn">Name English</label>
+          <input required [(ngModel)]="region.nameEn" class="form-control" name="nameEn" placeholder="Name English"  #nameEn="ngModel">
+
+          <div *ngIf="nameEn.invalid && (nameEn.dirty || nameEn.touched)" class="alert alert-danger">
+
+            <div *ngIf="nameEn.errors['required']">
+              Name English is required.
+            </div>
+            <div *ngIf="nameEn.errors['minlength']">
+              Name English must be at least 4 characters long.
+            </div>
+
+          </div>
+
+        </div>
+        <button type="submit" class="btn btn-default" [disabled]="frm.invalid">Submit</button>
+        <button class='btn btn-outline-secondary' (click)='onBack()'>
+          <i class='fa fa-chevron-left'></i> Back </button>
+
+      </form>
+    </div>
+
+
+
+  </div>
+
+</div>

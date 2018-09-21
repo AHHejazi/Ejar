@@ -1,0 +1,17 @@
+<div class="pagination" *ngIf="count > 0">
+   
+    <ul class="pagination">
+        <li class="page-item" >
+      <button class="page-link" (click)="onPrev()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }">&laquo;</button>
+    </li>
+      <li class="page-item" *ngFor="let pageNum of getPages()" >
+      <button
+        class="page-link"
+        (click)="onPage(pageNum)"
+        [ngClass]="{'active': pageNum === page, 'disabled': loading}">{{ pageNum }}</button></li>
+  
+        <li class="page-item" >
+      <button class="page-link" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }">&raquo;</button>
+    </li>
+    </ul>
+  </div>

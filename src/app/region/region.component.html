@@ -1,0 +1,83 @@
+<div class="card" >
+        <div class="card-header">Regions</div>
+        <div class="card-body">
+<div class="row">
+<div class="form-group col">
+  <label i18n="@@lblnamear">Name Arabic: </label>
+    <input  [(ngModel)]="nameAr"  placeholder="Name Arabic">
+ 
+</div>
+
+<div class="form-group col">
+  <label i18n="@@lblnameen">Name English: </label>
+    <input  [(ngModel)]="nameEn"  placeholder="Name English">
+ 
+</div>
+
+<div class="form-group col">
+    <label i18n="@@lblnamear">Date: </label>
+  <app-datepicker></app-datepicker>
+</div>
+
+</div>
+
+<button type="submit" (click)="searchRegion()" class="btn btn-primary btn-sm" i18n="@@btnsearch">Search</button>
+<a [routerLink]="['/regioncreate']" class="btn btn-secondary btn-sm" i18n="@@btncreate">Create</a>
+
+<div class='table table-striped'>
+  <table class='table'> 
+      <thead>
+          <tr>
+             
+              <th i18n="@@lblnamear">Name Arabic</th>
+              <th i18n="@@lblnameen">Name English</th>
+              <th>Operations</th>
+          </tr>
+      </thead>
+      <tbody *ngIf="((regionVM !=undefined) && (regionVM != null))">
+          <tr *ngFor="let region of regionVM.items">
+            <td> <a [routerLink]="['/regiondetail',region.id]" class="enable-overlay">{{region.nameAr}}</a></td>
+          <td>{{region.nameEn}}</td>
+          <td>
+            <a [ngStyle]="{'color':'#0056B3'}" [routerLink]="['/regionedit',region.id]" i18n="@@lnkedit"  i18n-title title="Edit"  class="enable-overlay"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+
+             <a [ngStyle]="{'color':'#0056B3'}" (click)="openModalDialog(region.id)" i18n="@@lnkdelete"  i18n-title title="Delete" data-toggle="modal" data-target="#exampleModal"  class="enable-overlay"><i class="fa fa-times fa-2x"></i></a>
+          </td>
+      </tr>
+      </tbody>
+     
+  </table>
+</div>
+</div>
+</div>
+
+<app-pagination
+  (goPage)="goToPage($event)"
+  (goNext)="onNext()"
+  (goPrev)="onPrev()"
+  [pagesToShow]="3"
+  [page]="page"
+  [perPage]="limit"
+  [count]="regionVM==null?0:regionVM.total"></app-pagination>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" data-toggle="modal" data-target="#exampleModal" [ngStyle]="{'display':display}">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseHandled()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Do you want to remove item?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="closeModalDialog()" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" (click)="deleteItem()">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <loading-spinner [showSpinner]='showSpinner' class="spinner"></loading-spinner>
